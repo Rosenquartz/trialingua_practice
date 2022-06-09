@@ -10,6 +10,7 @@ const controller = require('../controllers/user.controller')
 
 router.get('/', controller.getUsers)
 router.put('/:userId', controller.putUser);
+router.post('/newUser', controller.postUser)
 
 console.log('in users')
 module.exports = router;

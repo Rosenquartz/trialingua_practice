@@ -1,20 +1,41 @@
 const shortid = require('shortid')
 
 class User {
-    constructor(username, password, languages) {
+    constructor (username, password, languages, sid) {
         this.username = username,
         this.password = password,
-        this.languages = languages
+        this.languages = languages,
+        this.sid = sid
     }
 }
 
 var userList = {}
+var shortIdList = {}
 
 const controller = {
     postUser: function(req, res) {
-        res.status(200).json({
-            newUser: req.body
-        })
+        if (!req.body.username || !req.body.password || !req.body.languages) {
+            console.log('Empty Username or Password');
+            res.status(400);
+            res.end(JSON.stringify({
+                error: "Insufficient info."
+            }))
+        }
+        if (req.body.username in userList) {
+            res.status(400);
+            res.end(JSON.stringify({
+                error: "Existing user."
+            }))
+        }
+        newShortId = shortid.generate().toLowerCase();
+        shortIdList[newShortId] = req.body.username;
+        userList[req.body.username] = new User(req.body.username, req.body.password, req.body.languages,newShortId);
+        res.status(200);
+        res.end(JSON.stringify({
+            newUser: req.body,
+            sid: newShortId
+        }))
+
     },
     putUser: function(req, res) {
         res.status(200).json({
@@ -28,7 +49,10 @@ const controller = {
     }
 }
 
-userA = new User('Chocolate', 'icecream', ['German'])
-userList['firstuser'] = userA
+
+
+userA = new User('Chocolate', 'icecream', ['German'], 's7eup99')
+userList['Chocolate'] = userA
+shortIdList['choco'] = 'Chocolate'
 
 module.exports = controller;
