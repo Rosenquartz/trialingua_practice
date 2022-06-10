@@ -27,6 +27,7 @@ const controller = {
                 error: "Existing user."
             }))
         }
+        //step 3 verify email
         newShortId = shortid.generate().toLowerCase();
         shortIdList[newShortId] = req.body.username;
         userList[req.body.username] = new User(req.body.username, req.body.password, req.body.languages,newShortId);
@@ -43,13 +44,13 @@ const controller = {
         })
     },
     getUsers: function(req, res) {
+        let userArray = [] //populate with items of userlist
         res.status(200).json({
-            users: userList
+            users: userList // array of 
         })
     }
+    //getUser
 }
-
-
 
 userA = new User('Chocolate', 'icecream', ['German'], 's7eup99')
 userList['Chocolate'] = userA

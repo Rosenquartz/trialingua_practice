@@ -10,7 +10,7 @@ var languageRouter = require('./routes/languages');
 
 var app = express();
 
-// view engine setup
+// view e ngine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 

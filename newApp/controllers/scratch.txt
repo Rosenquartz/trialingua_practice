@@ -1,0 +1,81 @@
+user {
+  id: tayan
+  password: password
+  email: email
+  preferred_language: id // foreign key
+}
+
+progress_modules {
+  id: id
+  user_id
+  module_id
+  percentage
+  items[progress_item_ids]
+}
+
+progress_item {
+  id
+  user_id // foreign key
+  progress_modules_id // foreign key
+  attempts
+  weight
+}
+
+languageItem{
+  id: kor-alp-1
+  language_id: korean //foreign key
+  module_id: kor-alp //foreign key
+  native: 가
+  english: na
+}
+
+languageModule {
+  language_id: korean //foreign key
+  id: kor-alp
+  type: alphabet
+  items: [kor-alp-1, kor-alp-2, kor-alp-3, ...]
+}
+
+language {
+  modules: [kor-alp, kor-voc1, kor-voc2, kor-gre, kor-gra]
+  name: Korean
+  id: korean 
+}
+
+
+=================================================================
+progress_module: per user, per module
+id, user_id, module_id, percentage, items[{id, attempts, weight = 0.1}]
+
+progress_language: per user, per language
+
+
+
+LANGUAGE
+ - alphabet {
+        "ka": "가", 
+        "na": "나",
+        "da": "다",
+        "ra": "라",
+        "ma": "마",
+        "ba": "바",
+        "sa": "사"
+      }
+ - vocab1 {
+            "dog": "개",
+            "human": "사람",
+            "cat": "고야이",
+            "cow": "소",
+            "apple": "사과",
+            "country": "나라"
+        }
+ - vocab2 {
+    "government": "정부",
+    "society": "사회",
+    "education": "교육"}
+
+ - greetings {
+        "hello": "안녕",
+        "bye": "안녕"
+      }
+ - grammar(sentences)

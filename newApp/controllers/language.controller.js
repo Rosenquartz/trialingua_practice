@@ -12,7 +12,8 @@ var languageList = {};
 
 const controller = {
     getLanguageList: function(req, res) {
-        res.status(200)
+        res.status(200);
+        res.set({ 'content-type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({
             language: languageList
         }))
