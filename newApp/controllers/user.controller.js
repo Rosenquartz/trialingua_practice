@@ -1,7 +1,7 @@
 const controller = {
     createUser: function(req, res) {
         // Check if any of the fields are missing.
-        if (!req.body.username || !req.body.password || !req.body.email) {
+        if (!req.body.username || !req.body.password || !req.body.email || req.body.firstName || req.body.lastName) {
             res.status(400);
             res.end(JSON.stringify({
                 error: "Insufficient information."
@@ -55,7 +55,8 @@ const controller = {
             res.status(400);
             res.end(JSON.stringify({
                 error: "User doesn't exist."
-            }))
+            }));
+            return;
         }
 
         // Update fields but only if they are correct.
@@ -70,40 +71,43 @@ const controller = {
         }
     },
     getUserList: function(req, res) {
+        // Return array of usernames
         let userArray = Object.keys(userList)
         res.status(200).json({
-            users: userArray // array of 
+            users: userArray
         })
     },
     getUserProfile: function(req, res) {
+        const user = req.params.userId;
 
+        // Check if user exists
+        if (!(user in userList)) {
+            res.status(400);
+            res.end(JSON.stringify({
+                error: "User doesn't exist."
+            }));
+            return;
+        }
+
+        // Return username, email, pref. language, and (later) progress
+        res.status(200);
+        res.end(JSON.stringify({
+            username: userList[user].username,
+            email: userList[user].email,
+            preferred_language: userList[user].preferred_language
+        }))
     },
     getUserProgress: function(req, res) {
-
+        ;
     },
     getModuleQuestions: function(req, res) {
-        moon: 가사
+        
     }
 }
+
+
 
 // Temporary class for testing.
-class User {
-    constructor (username, password, email) {
-        this.username = username,
-        this.password = password,
-        this.email = email,
-        this.preferred_language = null
-    }
-}
 
-var userList = {}
-var emailList = []
-
-userA = new User("marck27", "password1", "m27@gmail.com")
-userB = new User("benJ", "password2", "jamin@hotmail.com")
-userList["marck27"] = userA
-userList["benJ"] = userB
-emailList.push("m27@gmail.com")
-emailList.push("jamin@hotmail.com")
 
 module.exports = controller;
